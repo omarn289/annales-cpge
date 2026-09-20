@@ -3,7 +3,7 @@
 // ==========================================
 
 // ID de ton Gist privé (peut rester public dans le code)
-const GIST_ID = eca402a7be9cf3bac3b4d154e7cd8a57; 
+const GIST_ID = "eca402a7be9cf3bac3b4d154e7cd8a57"; 
 
 // Récupération sécurisée du token (enregistré uniquement sur ton appareil)
 let GITHUB_TOKEN = localStorage.getItem('gh_token');
