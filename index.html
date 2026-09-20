@@ -1,0 +1,185 @@
+<!DOCTYPE html>
+<html lang="fr">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Annales CPGE</title>
+
+    <!-- FAVICON LINK -->
+    <link rel="icon" type="image/png" href="file:///C:/Users/Omar/Downloads/bookmark%20icon.png">
+
+    <!-- Space Grotesk Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+
+<header class="app-header">
+    <div class="logo-area">
+        <div class="brand-wrapper">
+            <!-- LOGO IMAGE -->
+            <img src="file:///C:/Users/Omar/Downloads/bookmark%20icon.png" alt="Logo" class="app-logo">
+            
+            <div class="title-block">
+                <p class="user-name">Omar NAMANI</p>
+                <div class="title-with-badge">
+                    <h1>Annales CPGE</h1>
+                    <span class="badge" id="stats-counter">0 Sujets</span>
+                </div>
+            </div>
+        </div>
+    </div>
+    <button id="open-modal-btn" class="primary-btn">+ Ajouter un sujet</button>
+</header>
+
+    <main class="container">
+        <!-- Search & Filters Toolbar -->
+        <section class="toolbar">
+            <div class="search-box">
+                <input type="text" id="search-input" placeholder="Rechercher par mot-clé, chapitre, etc.">
+            </div>
+
+            <div class="filter-group">
+                <!-- Filter by Concours -->
+                <select id="filter-concours">
+                    <option value="">Tous les concours</option>
+                    <option value="X-ENS">X-ENS</option>
+                    <option value="Mines-Ponts">Mines-Ponts</option>
+                    <option value="Centrale-Supélec">Centrale-Supélec</option>
+                    <option value="CCINP">CCINP</option>
+                    <option value="Autres">Autres</option>
+                </select>
+
+                <!-- Filter by Matière -->
+                <select id="filter-matiere">
+                    <option value="">Toutes les matières</option>
+                    <option value="Maths">Maths</option>
+                    <option value="Physique">Physique</option>
+                    <option value="Français-Philo">Français-Philo</option>
+                    <option value="Anglais">Anglais</option>
+                    <option value="SII">SII</option>
+                    <option value="Informatique">Informatique</option>
+                </select>
+
+                <!-- Filter by Status -->
+                <select id="filter-status">
+                    <option value="">Tous les statuts</option>
+                    <option value="todo">À faire</option>
+                    <option value="in_progress">En cours</option>
+                    <option value="done">Terminés</option>
+                </select>
+            </div>
+        </section>
+
+        <!-- Grid Container -->
+        <section class="exam-grid" id="exam-grid"></section>
+    </main>
+
+    <!-- Modal Window (Ajout) -->
+    <div id="add-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Ajouter une épreuve (PDF)</h2>
+                <button id="close-modal-btn" class="close-btn">&times;</button>
+            </div>
+
+            <form id="exam-form">
+                <div class="form-group">
+                    <label for="pdf-file-input">Fichier PDF du sujet</label>
+                    <input type="file" id="pdf-file-input" accept="application/pdf" required>
+                </div>
+
+                <div class="form-group">
+                    <label for="title-input">Titre du sujet / Description</label>
+                    <input type="text" id="title-input" placeholder="ex: Maths 1 - Problème d'algèbre linéaire" required>
+                </div>
+
+                <div class="form-row">
+                    <div class="form-group">
+                        <label for="concours-select">Concours</label>
+                        <select id="concours-select" required>
+                            <option value="X-ENS">X-ENS</option>
+                            <option value="Mines-Ponts">Mines-Ponts</option>
+                            <option value="Centrale-Supélec">Centrale-Supélec</option>
+                            <option value="CCINP">CCINP</option>
+                            <option value="Autres">Autres</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="matiere-select">Matière</label>
+                        <select id="matiere-select" required>
+                            <option value="Maths">Maths</option>
+                            <option value="Physique">Physique</option>
+                            <option value="Français-Philo">Français-Philo</option>
+                            <option value="Anglais">Anglais</option>
+                            <option value="SII">SII</option>
+                            <option value="Informatique">Informatique</option>
+                        </select>
+                    </div>
+
+                    <div class="form-group">
+                        <label for="year-input">Année</label>
+                        <input type="number" id="year-input" min="2000" max="2030" value="2024" required>
+                    </div>
+                </div>
+
+                <!-- Tag Selection & Creation -->
+                <div class="form-group">
+                    <label>Chapitres existants pour cette matière</label>
+                    <div id="existing-tags-container" class="existing-tags-list"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="tags-input">Nouveaux chapitres / tags (séparés par des virgules)</label>
+                    <input type="text" id="tags-input" placeholder="ex: Espaces vectoriels, Équations diff">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" id="cancel-btn" class="secondary-btn">Annuler</button>
+                    <button type="submit" class="primary-btn">Enregistrer le sujet</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <!-- Modal Édition -->
+    <div id="edit-modal" class="modal-overlay hidden">
+        <div class="modal-content">
+            <div class="modal-header">
+                <h2>Modifier le sujet</h2>
+                <button id="close-edit-modal-btn" class="close-btn">&times;</button>
+            </div>
+
+            <form id="edit-exam-form">
+                <input type="hidden" id="edit-exam-id">
+
+                <div class="form-group">
+                    <label for="edit-title-input">Titre du sujet</label>
+                    <input type="text" id="edit-title-input" required>
+                </div>
+
+                <div class="form-group">
+                    <label>Chapitres existants pour cette matière</label>
+                    <div id="edit-existing-tags-container" class="existing-tags-list"></div>
+                </div>
+
+                <div class="form-group">
+                    <label for="edit-tags-input">Nouveaux chapitres / tags (séparés par des virgules)</label>
+                    <input type="text" id="edit-tags-input" placeholder="ex: Intégration, Séries">
+                </div>
+
+                <div class="modal-actions">
+                    <button type="button" id="cancel-edit-btn" class="secondary-btn">Annuler</button>
+                    <button type="submit" class="primary-btn">Enregistrer</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
+    <script src="script.js"></script>
+</body>
+</html>

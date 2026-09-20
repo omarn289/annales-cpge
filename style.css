@@ -1,0 +1,658 @@
+/* ==========================================================================
+   CPGE Mock Exam Vault - Sharp Architectural Dark Theme (Slightly boosted contrast)
+   ========================================================================== */
+
+:root {
+  /* Contraste légèrement renforcé */
+  --bg-color: #080706;          /* Fond un peu plus sombre */
+  --surface-color: #191613;     /* Cartes légèrement réhaussées */
+  --surface-hover: #24201b;
+  
+  --text-primary: #f5f2eb;
+  --text-secondary: #a39b8f;
+  --text-muted: #615a51;
+
+  --accent-color: #d97706;
+  --accent-hover: #b45309;
+  --accent-dim: rgba(217, 119, 6, 0.15);
+  
+  /* Statut : En cours (Ambre) & Terminé (Vert) */
+  --progress-color: #f59e0b;
+  --progress-bg: rgba(245, 158, 11, 0.08);
+
+  --success-color: #10b981;
+  --success-bg: rgba(16, 185, 129, 0.08);
+
+  --tag-bg: #221e1a;
+  --tag-text: #beb5a6;
+
+  --font-main: 'Space Grotesk', -apple-system, blinkmacsystemfont, sans-serif;
+
+  --radius-sm: 2px;
+  --radius-md: 2px;
+  --radius-lg: 4px;
+  --transition: all 0.15s ease;
+}
+
+* {
+  box-sizing: border-box;
+  margin: 0;
+  padding: 0;
+}
+
+body {
+  background-color: var(--bg-color);
+  color: var(--text-primary);
+  font-family: var(--font-main);
+  line-height: 1.5;
+  min-height: 100vh;
+  padding-bottom: 40px;
+}
+
+h1, h2, h3, .card-title {
+  font-weight: 700;
+  letter-spacing: -0.02em;
+}
+
+.app-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 24px 40px;
+  background-color: var(--surface-color);
+  border-bottom: 2px solid #000000;
+}
+
+.logo-area {
+  display: flex;
+  align-items: center;
+  gap: 14px;
+}
+
+.logo-area h1 {
+  font-size: 1.3rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+  color: var(--text-primary);
+}
+
+.badge {
+  background-color: #000000;
+  color: var(--text-secondary);
+  font-size: 0.75rem;
+  font-weight: 600;
+  padding: 4px 10px;
+  border-radius: var(--radius-sm);
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+}
+
+.container {
+  max-width: 1200px;
+  margin: 32px auto;
+  padding: 0 24px;
+}
+
+.toolbar {
+  display: flex;
+  flex-direction: column;
+  gap: 16px;
+  margin-bottom: 28px;
+}
+
+@media (min-width: 768px) {
+  .toolbar {
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+  }
+}
+
+.search-box {
+  flex: 1;
+}
+
+.search-box input,
+select,
+.form-group input,
+.form-group select {
+  background-color: #000000;
+  border: none;
+  color: var(--text-primary);
+  padding: 12px 16px;
+  border-radius: var(--radius-sm);
+  font-size: 0.88rem;
+  font-family: var(--font-main);
+  transition: var(--transition);
+}
+
+.search-box input {
+  width: 100%;
+}
+
+.search-box input:focus,
+select:focus,
+.form-group input:focus,
+.form-group select:focus {
+  outline: 2px solid var(--accent-color);
+}
+
+.filter-group {
+  display: flex;
+  gap: 10px;
+  flex-wrap: wrap;
+}
+
+select {
+  cursor: pointer;
+}
+
+/* Exam Grid & Cards */
+.exam-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(320px, 1fr));
+  gap: 20px;
+}
+
+.exam-card {
+  background-color: var(--surface-color);
+  border: none;
+  border-radius: var(--radius-lg);
+  padding: 24px;
+  display: flex;
+  flex-direction: column;
+  justify-content: space-between;
+  gap: 18px;
+  transition: var(--transition);
+  position: relative;
+  cursor: pointer;
+}
+
+.exam-card:hover {
+  background-color: var(--surface-hover);
+}
+
+/* Status States */
+.exam-card.in_progress {
+  background-color: var(--progress-bg);
+}
+
+.exam-card.in_progress::before {
+  content: "• En cours";
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: var(--progress-color);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.exam-card.completed {
+  background-color: var(--success-bg);
+}
+
+.exam-card.completed::before {
+  content: "✓ Terminé";
+  position: absolute;
+  top: 20px;
+  right: 20px;
+  color: var(--success-color);
+  font-size: 0.75rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+}
+
+.card-header-meta {
+  display: flex;
+  gap: 8px;
+  margin-bottom: 6px;
+}
+
+.meta-tag {
+  font-size: 0.72rem;
+  font-weight: 700;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  background: var(--tag-bg);
+  color: var(--tag-text);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.meta-tag.concours {
+  background-color: var(--accent-dim);
+  color: var(--accent-color);
+}
+
+.card-title {
+  font-size: 1.15rem;
+  color: var(--text-primary);
+  line-height: 1.3;
+  padding-right: 70px;
+}
+
+.card-tags {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 6px;
+}
+
+.chapter-tag {
+  font-size: 0.72rem;
+  color: var(--text-secondary);
+  background-color: #000000;
+  padding: 3px 8px;
+  border-radius: var(--radius-sm);
+  font-weight: 500;
+}
+
+.card-actions {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-top: 6px;
+  padding-top: 14px;
+  border-top: 1px solid #28231d;
+}
+
+/* Style dédié au bouton Ouvrir PDF */
+.btn-open-pdf {
+  color: var(--accent-color);
+  background-color: var(--accent-dim);
+  text-decoration: none;
+  font-size: 0.82rem;
+  font-weight: 700;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  display: inline-flex;
+  align-items: center;
+  gap: 6px;
+  transition: var(--transition);
+}
+
+.btn-open-pdf:hover {
+  background-color: var(--accent-color);
+  color: #000000;
+  text-decoration: none;
+}
+
+.btn-delete {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+}
+
+.btn-delete:hover {
+  color: #ef4444;
+  background-color: rgba(239, 68, 68, 0.1);
+}
+
+.empty-state {
+  grid-column: 1 / -1;
+  text-align: center;
+  padding: 60px 20px;
+  color: var(--text-muted);
+}
+
+/* Checkboxes list for existing tags */
+.existing-tags-list {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 8px;
+  background-color: #000000;
+  padding: 10px;
+  border-radius: var(--radius-sm);
+  max-height: 120px;
+  overflow-y: auto;
+}
+
+.existing-tag-item {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  font-size: 0.8rem;
+  background-color: var(--surface-color);
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+}
+
+.existing-tag-item input {
+  cursor: pointer;
+}
+
+/* Buttons & Modal */
+.primary-btn {
+  background-color: var(--accent-color);
+  color: #000000;
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 700;
+  font-size: 0.88rem;
+  cursor: pointer;
+  transition: var(--transition);
+  font-family: var(--font-main);
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+
+.primary-btn:hover {
+  background-color: var(--accent-hover);
+  color: #ffffff;
+}
+
+.secondary-btn {
+  background-color: #000000;
+  color: var(--text-secondary);
+  border: none;
+  padding: 12px 20px;
+  border-radius: var(--radius-md);
+  font-weight: 600;
+  font-size: 0.88rem;
+  cursor: pointer;
+  font-family: var(--font-main);
+}
+
+.secondary-btn:hover {
+  color: var(--text-primary);
+}
+
+.modal-overlay {
+  position: fixed;
+  inset: 0;
+  background-color: rgba(0, 0, 0, 0.88);
+  backdrop-filter: blur(6px);
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  z-index: 1000;
+}
+
+.modal-overlay.hidden {
+  display: none;
+}
+
+.modal-content {
+  background-color: var(--surface-color);
+  border: none;
+  border-radius: var(--radius-lg);
+  width: 100%;
+  max-width: 520px;
+  padding: 32px;
+  box-shadow: 0 30px 60px rgba(0, 0, 0, 0.8);
+}
+
+.modal-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  margin-bottom: 24px;
+}
+
+.close-btn {
+  background: none;
+  border: none;
+  color: var(--text-muted);
+  font-size: 1.6rem;
+  cursor: pointer;
+}
+
+.form-group {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  margin-bottom: 18px;
+}
+
+.form-group label {
+  font-size: 0.78rem;
+  font-weight: 700;
+  text-transform: uppercase;
+  letter-spacing: 0.05em;
+  color: var(--text-secondary);
+}
+
+/* Style de l'input type="file" */
+.form-group input[type="file"] {
+  background-color: #000000;
+  color: var(--text-secondary);
+  padding: 8px;
+  cursor: pointer;
+}
+
+.form-group input[type="file"]::file-selector-button {
+  background-color: var(--surface-color);
+  color: var(--text-primary);
+  border: none;
+  padding: 6px 12px;
+  border-radius: var(--radius-sm);
+  cursor: pointer;
+  font-family: var(--font-main);
+  font-weight: 600;
+  margin-right: 12px;
+  transition: var(--transition);
+}
+
+.form-group input[type="file"]::file-selector-button:hover {
+  background-color: var(--accent-color);
+  color: #000000;
+}
+
+.form-row {
+  display: grid;
+  grid-template-columns: 1fr 1fr 1fr;
+  gap: 12px;
+}
+
+.modal-actions {
+  display: flex;
+  justify-content: flex-end;
+  gap: 12px;
+  margin-top: 28px;
+}
+
+/* Bouton éditer */
+.btn-edit {
+  background: none;
+  border: none;
+  color: var(--text-secondary);
+  font-size: 0.8rem;
+  font-weight: 600;
+  cursor: pointer;
+  padding: 4px 8px;
+  border-radius: var(--radius-sm);
+  transition: var(--transition);
+}
+
+.btn-edit:hover {
+  color: var(--accent-color);
+  background-color: var(--accent-dim);
+}
+
+.card-actions-right {
+  display: flex;
+  gap: 4px;
+  align-items: center;
+}
+
+/* ==========================================================================
+   Personnalisation des barres de défilement (Scrollbar Thème Sombre)
+   ========================================================================== */
+
+/* Largeur et hauteur de la barre de défilement */
+::-webkit-scrollbar {
+  width: 6px;
+  height: 6px;
+}
+
+/* Fond de la glissière (rail) */
+::-webkit-scrollbar-track {
+  background: #000000;
+  border-radius: var(--radius-sm);
+}
+
+/* Poignée de défilement (curseur) */
+::-webkit-scrollbar-thumb {
+  background: var(--surface-hover);
+  border-radius: var(--radius-sm);
+}
+
+/* Survol de la poignée */
+::-webkit-scrollbar-thumb:hover {
+  background: var(--text-muted);
+}
+
+/* Compatibilité Firefox */
+* {
+  scrollbar-width: thin;
+  scrollbar-color: var(--surface-hover) #000000;
+}
+
+/* ==========================================================================
+   Responsive & Optimisation Mobile
+   ========================================================================== */
+
+@media (max-width: 768px) {
+  /* 1. Conteneur principal et espacements */
+  body {
+    padding: 12px;
+  }
+
+  header {
+    margin-bottom: 20px;
+  }
+
+  h1 {
+    font-size: 1.5rem;
+  }
+
+  /* 2. Filtres empilés verticalement */
+  .filters-bar {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .filters-bar input,
+  .filters-bar select {
+    width: 100%;
+    min-height: 44px; /* Meilleur confort de tap tactile */
+  }
+
+  /* 3. Grille de cartes sur 1 seule colonne */
+  .exam-grid {
+    grid-template-columns: 1fr;
+    gap: 16px;
+  }
+
+  /* 4. Cartes & Boutons optimisés au toucher */
+  .exam-card {
+    padding: 16px;
+  }
+
+  .card-actions {
+    flex-direction: column;
+    align-items: stretch;
+    gap: 10px;
+  }
+
+  .card-actions-right {
+    display: flex;
+    gap: 8px;
+    width: 100%;
+  }
+
+  .btn-open-pdf,
+  .btn-edit,
+  .btn-delete {
+    min-height: 44px;
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    font-size: 0.95rem;
+  }
+
+  .btn-edit,
+  .btn-delete {
+    flex: 1;
+  }
+
+  /* 5. Modales adaptées aux petits écrans */
+  .modal-content {
+    width: 95%;
+    max-width: 100%;
+    max-height: 90vh;
+    padding: 20px 16px;
+    overflow-y: auto;
+    border-radius: var(--radius-md, 12px);
+  }
+
+  /* 6. Agrandissement des zones de saisie et tags */
+  .existing-tag-item {
+    padding: 8px 12px;
+    font-size: 0.9rem;
+  }
+
+  .existing-tag-checkbox {
+    width: 18px;
+    height: 18px;
+  }
+}
+
+.logo-area {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-start; /* Aligne le prénom et le titre tout à gauche */
+  gap: 2px;                /* Espace court entre le prénom et le titre */
+}
+
+.user-name {
+  color: var(--text-secondary, #a39b8f);
+  font-size: 0.8rem;
+  font-weight: 600;
+  text-transform: uppercase;
+  letter-spacing: 0.08em;
+  margin: 0;               /* Annule la marge par défaut du paragraphe */
+  text-align: left;        /* Sécurité d'alignement */
+}
+
+.title-with-badge {
+  display: flex;
+  align-items: center;     /* Aligne le badge au centre de la hauteur du H1 */
+  gap: 12px;               /* Espace entre le titre et le badge */
+}
+
+.title-with-badge h1 {
+  margin: 0;               /* Annule les marges par défaut pour un alignement propre */
+}
+
+/* Container for logo + text block side-by-side */
+.brand-wrapper {
+  display: flex;
+  align-items: center;
+  gap: 12px; /* Space between logo and text */
+}
+
+/* Logo Sizing and Styling */
+.app-logo {
+  width: 80px;
+  height: 80px;
+  object-fit: contain;
+  border-radius: var(--radius-sm, 6px);
+}
+
+/* Ensure title block stays stacked vertically */
+.title-block {
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+}
